@@ -6,11 +6,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="styles/index.css">
     <script src="scripts/index.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
+    <div class="container">
+        <div class="images">
+            <img class="scene" src="images/scenes/grass-1.png" alt="">
+            <img class="player-tag" src="images/UI/player-tag.png" alt="">
+            <img class="player" src="images/pokemons/Pikachu.png" alt="">
+            <img class="computer-tag" src="images/UI/computer-tag.png" alt="">
+            <img class="computer" src="images/pokemons/Raikou.png" alt="">
+        </div>
+        <div class="text">
+            <div class="textbox"></div>
+            <div class="choices">
+                <button>Rock</button>
+                <button>Paper</button>
+                <button>Scissors</button>
+                <button>Log</button>
+            </div>
+        </div>
+    </div>
 
+    <div class="controller">
+        <div class="control-btns">
+            <button id="mute-unmute" class="control-btn"><i class="fas fa-volume-mute"></i></button>
+        </div>
+    </div>
+    <audio id="battle-music" src="audios/battle-with-wild-pokemon.mp3"></audio>
 </body>
 
 </html>

@@ -39,4 +39,17 @@ function game() {
     }
     console.log((playerScore > computerScore) ? "You Win!" : "You Lose"); 
 }
-game();
+
+
+const battleMusic = document.querySelector("#battle-music"); 
+const battleMusicMute = document.querySelector("#mute-unmute"); 
+const icon = document.querySelector("#mute-unmute i")
+battleMusicMute.onclick = () => {
+    icon.classList.toggle("fa-volume-mute")
+    icon.classList.toggle("fa-volume-up")
+    if (battleMusic.paused) {
+        battleMusic.play(); 
+    } else {
+        battleMusic.pause(); 
+    }
+}

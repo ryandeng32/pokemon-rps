@@ -1,4 +1,5 @@
 @import "resets.css";
+@import url('http://fonts.cdnfonts.com/css/aux-dotbitc');
 
 body {
     display: flex; 
@@ -8,15 +9,44 @@ body {
     background: rgb(138, 138, 138);
 }
 
+* {
+    font-family: 'AuX DotBitC', sans-serif;
+    font-size: min(20px, 1vw);
+}
+
+
+
 .container {
     border: 30px solid rgb(90, 90, 90);
-    width: 80%;
-    max-width: 800px;
+    width: 60%;
+    max-width: 600px;
     border-radius: 20px 20px 0 0;
     display: grid; 
     grid-template-columns: 1fr; 
     grid-template-rows: 1fr 0.3fr;
     border-bottom: none;
+    position: relative;
+    overflow: hidden;
+}
+
+/* add pseudo element for gradient */ 
+.open-animation {
+    background: black;
+    opacity: 1;
+    width: 200%; 
+    left:0;
+    height: 100%;
+    position: absolute;
+    z-index: 2;
+    animation-name: open-animation; 
+    animation-duration: 2s;
+    animation-fill-mode:forwards;
+}
+
+@keyframes open-animation {
+    100% {
+       transform: translateX(100%);
+    }
 }
 
 .scene {
@@ -31,16 +61,16 @@ body {
 
 .player-tag {
     position: absolute; 
-    right: 2%; 
-    bottom: 0;
-    width: 40%;
+    right: 5%; 
+    bottom: 5%;
+    width: 30%;
 }
 
 .computer-tag {
     position: absolute;    
-    left: 10%; 
-    top: 10%;
-    width: 45%;
+    left: 15%; 
+    top: 15%;
+    width: 32%;
 }
 .player {
     position: absolute; 
@@ -59,8 +89,8 @@ body {
 
 .controller {
     background: rgb(61, 61, 61);
-    width: 80%;
-    max-width: 800px;
+    width: 60%;
+    max-width: 600px;
     border-radius: 0 0 20px 20px;
     position: relative;
     overflow: hidden;
@@ -72,19 +102,24 @@ body {
     grid-template-rows: 1fr; 
 }   
 .textbox {
+    padding: 1% 4%;
     background: rgb(230, 230, 230);
     border: 7px solid rgb(182, 113, 10);
+}
+
+.textbox p {
+    line-height: min(20px, 1.5vw);
 }
 
 .choices {
     display: grid; 
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr; 
-    padding: 2%;
-    grid-column-gap: 2%;
-    grid-row-gap: 2%;
     align-content: center;
     justify-content: center;;
+}
+.choices button {
+    border-radius: 20px;
 }
 .control-btns {
     padding: 20px;
@@ -107,11 +142,12 @@ body {
 
 @media (max-width: 900px) {
     .container, .controller {
-        width: 90%;
+        width: 80%;
     }
 
     .container {
         border: 20px solid rgb(90, 90, 90);
         border-bottom: none;
     }
+
 }

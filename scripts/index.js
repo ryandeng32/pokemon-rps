@@ -53,3 +53,15 @@ battleMusicMute.onclick = () => {
         battleMusic.pause(); 
     }
 }
+
+
+/* TODOS 
+1. Page open animation: 
+    - screen fade from black with effect 
+    - pokemons move from one side of the screen to their location 
+    - healthbar's health fills up 
+    - animate text
+*/ 
+
+const openAnimation = document.querySelector(".open-animation"); 
+console.log(openAnimation); 

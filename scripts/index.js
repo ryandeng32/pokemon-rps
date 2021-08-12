@@ -44,6 +44,10 @@ battleMusicMute.onclick = () => {
     }
 }
 
+battleMusic.addEventListener("ended", () => {
+    battleMusic.currentTime = 0; 
+    battleMusic.play();
+})
 
 function checkGame() {
     if (playerScore === 5 || computerScore === 5) {
@@ -155,6 +159,7 @@ function gameInit() {
 
 function gameEnd() {
     isPlaying = false;
+    isGameEnding = false
     textQueue = [];
     clearTimeout(timer)
     playerScore = initPlayerScore; 
@@ -220,8 +225,3 @@ document.querySelector("#paperBtn").onclick = () => {
 document.querySelector("#scissorsBtn").onclick = () => {
     playRound("scissors"); 
 }
-
-
-// TODO 
-// make width wider
-// change all px to em or %; 

@@ -230,7 +230,7 @@ computerImg.addEventListener("animationend", (e) => {
 
 // the choices buttons 
 document.querySelector("#statusBtn").onclick = () => {
-    if (!isGameEnding()){
+    if (!isGameEnding){
         showMsg(`Your score: ${playerScore}, Computer score: ${computerScore}`); 
     }
 }

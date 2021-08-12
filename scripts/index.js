@@ -9,7 +9,7 @@ const computerScoreRender = document.querySelector(".computer-tag-score");
 const playerScoreRender = document.querySelector(".player-tag-score"); 
 const battleMusic = document.querySelector("#battle-music"); 
 const battleMusicMute = document.querySelector("#mute-btn"); 
-const icon = document.querySelector("#mute-unmute i")
+const icon = document.querySelector("#mute-btn i")
 let isAnimating = false; 
 
 function computerPlay(){

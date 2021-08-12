@@ -186,6 +186,56 @@ body {
     width: 54%;
 }
 
+.choice {
+    position: absolute;
+    width: 7em;
+    height: 7em;
+}
+
+.player-choice {
+    bottom: -10%; 
+    left: 23%;
+    opacity: 0;
+}
+
+.player-choice.shoot {
+    animation-name: player-shoot; 
+    animation-duration: 1s; 
+    animation-fill-mode: forwards; 
+}
+
+.computer-choice {
+    top: 30%; 
+    right: 15%; 
+    opacity: 0;
+}
+
+.computer-choice.shoot {
+    z-index: 2;
+    animation-name: computer-shoot; 
+    animation-duration: 1s; 
+    animation-fill-mode: forwards; 
+}
+@keyframes computer-shoot {
+    50% {
+        right: 40%; 
+        opacity: 1; 
+    }
+    100% {
+        right: 40%;
+        opacity: 0; 
+    }
+}
+@keyframes player-shoot {
+    50% {
+        bottom: 15%; 
+        opacity: 1; 
+    }
+    100% {
+        bottom: 15%;
+        opacity: 0; 
+    }
+}
 .player.hurt {
     animation-name: hurt; 
     animation-duration: 1s; 
@@ -237,7 +287,6 @@ body {
         right: 7%;
     }
 }
-
 
 
 #action {

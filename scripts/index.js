@@ -10,6 +10,8 @@ const playerScoreRender = document.querySelector(".player-tag-score");
 const battleMusic = document.querySelector("#battle-music"); 
 const battleMusicMute = document.querySelector("#mute-btn"); 
 const icon = document.querySelector("#mute-btn i")
+const playerChoiceEl = document.querySelector(".player-choice"); 
+const computerChoiceEl = document.querySelector(".computer-choice"); 
 let isAnimating = false; 
 
 function computerPlay(){
@@ -63,9 +65,25 @@ function renderScore() {
     playerScoreRender.style.width = `${((1-(computerScore / 5)) * 100).toFixed(0)}%`
 }
 
+playerChoiceEl.addEventListener("animationend", (e) => {
+    if (e.animationName === "player-shoot"){
+        playerChoiceEl.classList.remove("shoot");
+    }
+})
+
+computerChoiceEl.addEventListener("animationend", (e) => {
+    if (e.animationName === "computer-shoot"){
+        computerChoiceEl.classList.remove("shoot");
+    }
+})
+
 function playRound(playerSelection) {
     if (!isAnimating) {     
         let computerSelection = computerPlay(); 
+        playerChoiceEl.src=`images/choices/${playerSelection}.png`;
+        playerChoiceEl.classList.add("shoot");
+        computerChoiceEl.src=`images/choices/${computerSelection}.png`;
+        computerChoiceEl.classList.add("shoot");
         let result = getResult(playerSelection, computerSelection); 
         if (result.indexOf("Win") != -1) {
             playerScore++; 
@@ -75,8 +93,7 @@ function playRound(playerSelection) {
             playerImg.classList.add("hurt");
         }
         renderScore(playerScore, computerScore); 
-        showMsg(`You chose ${playerSelection}, computer chose ${computerSelection}`, result, 
-        `Your score: ${playerScore}, Computer score: ${computerScore}`, checkGame()); 
+        showMsg(result, checkGame()); 
     }
 }
 
@@ -196,3 +213,4 @@ document.querySelector("#scissorsBtn").onclick = () => {
 
 // TODO 
 // make width wider
+// change all px to em 

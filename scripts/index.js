@@ -48,10 +48,12 @@ battleMusicMute.onclick = () => {
 function checkGame() {
     if (playerScore === 5 || computerScore === 5) {
         if (playerScore === 5) {
+            isGameEnding = true; 
             timer = setTimeout(()=>{gameEnd()}, 5000); 
             return "You Win! Thanks for playing"; 
         }
         else {
+            isGameEnding = true; 
             timer = setTimeout(()=>{gameEnd()}, 5000); 
             return "You Lose! Thanks for playing"; 
         }
@@ -78,7 +80,7 @@ computerChoiceEl.addEventListener("animationend", (e) => {
 })
 
 function playRound(playerSelection) {
-    if (!isAnimating) {     
+    if (!isAnimating && !isGameEnding) {     
         let computerSelection = computerPlay(); 
         playerChoiceEl.src=`images/choices/${playerSelection}.png`;
         playerChoiceEl.classList.add("shoot");
@@ -91,6 +93,9 @@ function playRound(playerSelection) {
         } else if (result.indexOf("Lose") != -1) {
             computerScore++; 
             playerImg.classList.add("hurt");
+        } else {
+            computerImg.classList.add("tie"); 
+            playerImg.classList.add("tie"); 
         }
         renderScore(playerScore, computerScore); 
         showMsg(result, checkGame()); 
@@ -101,11 +106,17 @@ playerImg.addEventListener("animationend", (e) => {
     if (e.animationName === "hurt"){
         playerImg.classList.remove("hurt");
     }
+    if (e.animationName === "tie") {
+        playerImg.classList.remove("tie"); 
+    }
 })
 
 computerImg.addEventListener("animationend", (e) => {
     if (e.animationName === "hurt"){
         computerImg.classList.remove("hurt");
+    }
+    if (e.animationName === "tie") {
+        computerImg.classList.remove("tie"); 
     }
 })
 function startGame() {
@@ -126,7 +137,7 @@ function showMsg(...msgs) {
     }
 }
 
-
+let isGameEnding = false;
 let textQueue = []; 
 let isPlaying = false;
 let timer = null; 
@@ -193,7 +204,7 @@ view.addEventListener("animationend", (e) => {
 view.addEventListener("animatetextdone", () => {
     if (textQueue.length !== 0) {
         isAnimating = true; 
-        timer = setTimeout(()=>{animateText(textQueue.shift())}, 500); 
+        timer = setTimeout(()=>{animateText(textQueue.shift())}, 1000); 
     }
 })
 
@@ -213,4 +224,4 @@ document.querySelector("#scissorsBtn").onclick = () => {
 
 // TODO 
 // make width wider
-// change all px to em 
+// change all px to em or %; 

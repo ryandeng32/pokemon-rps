@@ -11,7 +11,7 @@ body {
 
 * {
     font-family: 'AuX DotBitC', sans-serif;
-    font-size: min(1.5vw, 15px);
+    font-size: min(2vw, 15px);
 }
 
 #title {
@@ -39,8 +39,9 @@ body {
 #view.no-screen::before {
     display: none;
 }
+
 #view::before {
-    content: "Press the POWER button to play";
+    content: "Press the POWER button to play/restart";
     display: flex; 
     align-items: center;
     justify-content: center;
@@ -107,18 +108,18 @@ body {
 }
 .player-tag-level {
     position: absolute; 
-    top: 1.4em;
-    right: 1.3em;
+    top: 28%;
+    right: 12%;
 }
 
 .player-tag-exp {
-    width: 45%; 
-    height: 0.6em; 
+    width: 46%; 
+    height: 12%; 
     border: 1px solid #1e1e22;
     background: gray;
     position: absolute; 
-    top: 2.3em; 
-    right: 1.2em;
+    top: 45%; 
+    right: 10%;
     border-radius: 1em;
 }
 
@@ -132,8 +133,8 @@ body {
 }
 .player-tag-name {
     position: absolute; 
-    top: 1.4em;
-    left: 2em;
+    top: 28%;
+    left: 17%;
 }
 .player-tag {
     width: 100%;
@@ -147,24 +148,24 @@ body {
 
 .computer-tag-level {
     position: absolute; 
-    top: 1em; 
-    right: 2.3em;
+    top: 22%; 
+    right: 20%;
 }
 
 .computer-tag-name {
     position: absolute; 
-    top: 1em; 
-    left: 1em;
+    top: 22%; 
+    left: 10%;
 }
 
 .computer-tag-exp {
-    width: 45%; 
-    height: 0.6em; 
+    width: 46%; 
+    height: 14%; 
     border: 1px solid #1e1e22;
     position: absolute; 
-    top: 2em; 
+    top: 43%; 
     background: gray;
-    right: 2.2em;
+    right: 18%;
     border-radius: 1em;
 }
 
@@ -188,13 +189,12 @@ body {
 
 .choice {
     position: absolute;
-    width: 7em;
-    height: 7em;
+    width: 15%;
 }
 
 .player-choice {
     bottom: -10%; 
-    left: 23%;
+    left: 25%;
     opacity: 0;
 }
 
@@ -228,12 +228,31 @@ body {
 }
 @keyframes player-shoot {
     50% {
-        bottom: 15%; 
+        bottom: 25%; 
         opacity: 1; 
     }
     100% {
         bottom: 15%;
         opacity: 0; 
+    }
+}
+.player.tie {
+    animation-name: tie; 
+    animation-duration: 1s; 
+}
+.computer.tie {
+    animation-name: tie; 
+    animation-duration: 1s; 
+}
+@keyframes tie {
+    50% {
+        transform: translateY(-0.5em);
+    }
+    70% {
+        transform: translateY(0.5em);
+    }
+    80% {
+        transform: scale(1.2);
     }
 }
 .player.hurt {
@@ -290,28 +309,28 @@ body {
 
 
 #action {
-    padding-top: 3px;
+    padding-top: 0.5%;
     background: rgb(48, 48, 48);
     display: grid; 
     grid-template-columns: 1fr 0.7fr;
-    grid-column-gap: 4px;
+    grid-column-gap: 0.5%;
     grid-template-rows: 1fr; 
 }   
 .textbox {
-    padding: 4%;
+    text-overflow:ellipsis;
+    padding: 3%;
     background: rgb(64, 81, 100);
-    border: 7px solid rgb(175, 154, 96);
+    border: 0.3em solid rgb(175, 154, 96);
     color:rgb(230, 230, 230);
-    border-radius: 10px 0 0 10px;
+    border-radius: 0.5em 0 0 0.5em;
     border-right: none;    
     line-height: 1em;
-
 }
 
 
 .choices {
-    border: 5px solid rgb(123, 123, 206);
-    border-radius: 10px;
+    border: 0.3em solid rgb(123, 123, 206);
+    border-radius: 0.5em;
     display: grid; 
     background: rgb(230, 230, 230);
     grid-template-columns: 1fr 1fr;

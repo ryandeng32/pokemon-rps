@@ -24,7 +24,7 @@ body {
 /* || CONTAINER */ 
 #container {
     position: relative;
-    width: 60%;
+    width: 85%;
     max-width: 600px;
     border-radius: 2em;
     display: grid; 

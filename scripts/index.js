@@ -192,3 +192,7 @@ document.querySelector("#paperBtn").onclick = () => {
 document.querySelector("#scissorsBtn").onclick = () => {
     playRound("scissors"); 
 }
+
+
+// TODO 
+// make width wider

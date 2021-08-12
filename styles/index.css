@@ -6,48 +6,87 @@ body {
     align-items: center; 
     justify-content: center;
     flex-direction: column;
-    background: rgb(138, 138, 138);
+    background: #cacaca;
 }
 
 * {
     font-family: 'AuX DotBitC', sans-serif;
-    font-size: min(20px, 1vw);
+    font-size: min(1.5vw, 15px);
 }
 
-
-
+#title {
+    text-align: center;
+    font-size: min(3vw, 30px);
+    margin-bottom: 2em;
+    padding: 0;
+}
+/* || CONTAINER */ 
 .container {
-    border: 30px solid rgb(90, 90, 90);
+    position: relative;
     width: 60%;
     max-width: 600px;
-    border-radius: 20px 20px 0 0;
+    border-radius: 2em;
     display: grid; 
     grid-template-columns: 1fr; 
     grid-template-rows: 1fr 0.3fr;
-    border-bottom: none;
-    position: relative;
-    overflow: hidden;
+    grid-template-areas: "view"
+            "controller"; 
+    box-shadow: 12px 14px 15px 5px rgba(0,0,0,0.64);    
 }
 
-/* add pseudo element for gradient */ 
-.open-animation {
-    background: black;
-    opacity: 1;
-    width: 200%; 
-    left:0;
-    height: 100%;
+/* || VIEW */ 
+.view.no-screen::before {
+    display: none;
+}
+.view::before {
+    content: "Press the POWER button to play";
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    width: 100%; 
+    height: 100%; 
     position: absolute;
+    top: 0;
     z-index: 2;
-    animation-name: open-animation; 
-    animation-duration: 2s;
+    background: rgb(136, 136, 136);
+}
+
+.view.active::before {
+    content: ""; 
+    animation-name: open-animation;
+    animation-iteration-count: 2;
+    animation-duration: 1s;
     animation-fill-mode:forwards;
 }
 
 @keyframes open-animation {
+    50% {
+        background: black; 
+        opacity: 0.8; 
+    }
+    75% {
+        opacity: 0.9;
+    }
     100% {
-       transform: translateX(100%);
+       opacity: 0;
     }
 }
+
+.view {
+    border: 1.5em solid #3b3d47;
+    border-bottom: 0;
+    border-radius: 2em 2em 0 0;
+    position: relative; 
+    overflow: hidden;
+    display: grid; 
+    grid-template-columns: 1fr; 
+    grid-template-rows: 1fr 0.3fr;
+
+}
+
+
+
+
 
 .scene {
     display: block ;
@@ -59,76 +98,167 @@ body {
     overflow: hidden;
 }
 
-.player-tag {
+.player-tag-group {
     position: absolute; 
-    right: 5%; 
-    bottom: 5%;
+    right: 5%;
+    bottom: 3%;
     width: 30%;
 }
+.player-tag-level {
+    position: absolute; 
+    top: 1.4em;
+    right: 1.3em;
+}
 
-.computer-tag {
-    position: absolute;    
-    left: 15%; 
-    top: 15%;
+.player-tag-exp {
+    width: 45%; 
+    height: 0.6em; 
+    border: 1px solid #1e1e22;
+    background: rgb(133, 218, 175);
+    position: absolute; 
+    top: 2.3em; 
+    right: 1.2em;
+    border-radius: 1em;
+}
+.player-tag-name {
+    position: absolute; 
+    top: 1.4em;
+    left: 2em;
+}
+.player-tag {
+    width: 100%;
+}
+.computer-tag-group {
+    position: absolute; 
     width: 32%;
+    top: 5%; 
+    left: 10%;
+}
+
+.computer-tag-level {
+    position: absolute; 
+    top: 1em; 
+    right: 2.3em;
+}
+
+.computer-tag-name {
+    position: absolute; 
+    top: 1em; 
+    left: 1em;
+}
+
+.computer-tag-exp {
+    width: 45%; 
+    height: 0.6em; 
+    border: 1px solid #1e1e22;
+    background: rgb(133, 218, 175);
+    position: absolute; 
+    top: 2em; 
+    right: 2.2em;
+    border-radius: 1em;
+}
+.computer-tag {
+    width: 100%;
 }
 .player {
     position: absolute; 
     bottom: -40%;
-    left: -3%;
+    left: -35%;
     width: 54%;
 }
 
+.player.active {
+    animation-name: player-move-in;
+    animation-duration: 1s;
+    animation-delay: 0.5s; 
+    animation-timing-function: ease-out;
+    animation-fill-mode:forwards;
+}
 .computer {
     position: absolute; 
     top:15%;
-    right: 7%;
+    right: -35%;
     width: 33%;
 }
-
-
-.controller {
-    background: rgb(61, 61, 61);
-    width: 60%;
-    max-width: 600px;
-    border-radius: 0 0 20px 20px;
-    position: relative;
-    overflow: hidden;
+.computer.active {
+    animation-name: computer-move-in;
+    animation-delay: 1s;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    animation-fill-mode:forwards;
 }
 
+@keyframes player-move-in {
+    100% {
+        left: -3%;
+    }
+}
+@keyframes computer-move-in {
+    100% {
+        right: 7%;
+    }
+}
+
+
+
 .text {
+    padding-top: 3px;
+    background: rgb(48, 48, 48);
     display: grid; 
-    grid-template-columns: 1fr 0.5fr;
+    grid-template-columns: 1fr 0.7fr;
+    grid-column-gap: 4px;
     grid-template-rows: 1fr; 
 }   
 .textbox {
-    padding: 1% 4%;
-    background: rgb(230, 230, 230);
-    border: 7px solid rgb(182, 113, 10);
+    padding: 4%;
+    background: rgb(64, 81, 100);
+    border: 7px solid rgb(175, 154, 96);
+    color:rgb(230, 230, 230);
+    border-radius: 10px 0 0 10px;
+    border-right: none;    
+    line-height: 1em;
+
 }
 
-.textbox p {
-    line-height: min(20px, 1.5vw);
-}
 
 .choices {
+    border: 5px solid rgb(123, 123, 206);
+    border-radius: 10px;
     display: grid; 
+    background: rgb(230, 230, 230);
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr; 
     align-content: center;
     justify-content: center;;
 }
 .choices button {
-    border-radius: 20px;
+    transition: 0.2s;
+    border: none;
+    background: rgb(230, 230, 230);
 }
+
+.choices button:hover {
+    background: rgb(196, 196, 196);
+}
+
+.controller {
+    grid-area: controller;
+    background: #1e1e22;
+    width: 100%;
+    border-radius: 0 0 2em 2em;
+    position: relative;
+    overflow: hidden;
+}
+
 .control-btns {
-    padding: 20px;
+    height: 100%;
     display: flex;
     width: 100%;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-around;
 }
 .control-btn {
-    padding: 20px;
+    padding: 3%;
     border-radius: 50%; 
     background:rgb(138, 138, 138);
     border: none;
@@ -139,15 +269,6 @@ body {
     background-color: rgb(199, 199, 199);
 }
 
-
-@media (max-width: 900px) {
-    .container, .controller {
-        width: 80%;
-    }
-
-    .container {
-        border: 20px solid rgb(90, 90, 90);
-        border-bottom: none;
-    }
-
+footer {
+    margin-top: 2em;
 }

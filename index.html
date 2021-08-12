@@ -14,34 +14,51 @@
 </head>
 
 <body>
+    <h1 id="title">Rock Paper Scissors (Pokemon Version)</h1>
     <div class="container">
-        <div class="open-animation"></div>
-        <div class="images">
-            <img class="scene" src="images/scenes/grass-1.png" alt="">
-            <img class="player-tag" src="images/UI/player-tag.png" alt="">
-            <img class="player" src="images/pokemons/Pikachu.png" alt="">
-            <img class="computer-tag" src="images/UI/computer-tag.png" alt="">
-            <img class="computer" src="images/pokemons/Raikou.png" alt="">
-        </div>
-        <div class="text">
-            <div class="textbox">
-
+        <div class="view">
+            <div class="images">
+                <img class="scene" src="images/scenes/grass-1.png" alt="">
+                <div class="player-tag-group">
+                    <span class="player-tag-level">1</span>
+                    <span class="player-tag-name">PLAYER</span>
+                    <div class="player-tag-exp"></div>
+                    <img class="player-tag" src="images/UI/player-tag.png" alt="">
+                </div>
+                <img class="player" src="images/pokemons/Pikachu.png" alt="">
+                <div class="computer-tag-group">
+                    <span class="computer-tag-level">1</span>
+                    <span class="computer-tag-name">COMPUTER</span>
+                    <div class="computer-tag-exp"></div>
+                    <img class="computer-tag" src="images/UI/computer-tag.png" alt="">
+                </div>
+                <img class="computer" src="images/pokemons/Raikou.png" alt="">
             </div>
-            <div class="choices">
-                <button>Rock</button>
-                <button>Paper</button>
-                <button>Scissors</button>
-                <button>Log</button>
+            <div class="text">
+                <div class="textbox">
+                </div>
+                <div class="choices">
+                    <button>ROCK</button>
+                    <button>PAPER</button>
+                    <button>SCISSORS</button>
+                    <button>STATUS</button>
+                </div>
+            </div>
+        </div>
+        <div class="controller">
+            <div class="control-btns">
+                <button id="mute-unmute" class="control-btn"><i class="fas fa-volume-mute"></i></button>
+                <button id="start-btn" class="control-btn"><i class="fa fa-power-off"></i></button>
             </div>
         </div>
     </div>
 
-    <div class="controller">
-        <div class="control-btns">
-            <button id="mute-unmute" class="control-btn"><i class="fas fa-volume-mute"></i></button>
-        </div>
-    </div>
+
+    <!--audio used in game-->
     <audio id="battle-music" src="audios/battle-with-wild-pokemon.mp3"></audio>
+    <footer>
+        <a href="https://github.com/ryandeng32">@ryandeng32</a>
+    </footer>
 </body>
 
 </html>

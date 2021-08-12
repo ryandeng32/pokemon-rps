@@ -41,6 +41,7 @@ function game() {
 }
 
 
+// Dealing with DOM 
 const battleMusic = document.querySelector("#battle-music"); 
 const battleMusicMute = document.querySelector("#mute-unmute"); 
 const icon = document.querySelector("#mute-unmute i")
@@ -55,6 +56,32 @@ battleMusicMute.onclick = () => {
 }
 
 
+const textBox = document.querySelector(".textbox"); 
+const startBtn = document.querySelector("#start-btn"); 
+const view = document.querySelector(".view");
+const playerImg = document.querySelector(".player");
+const computerImg = document.querySelector(".computer");
+const openAnimation = document.querySelector(".open-animation"); 
+
+startBtn.onclick = () => {
+    if (view.classList.contains("active")) {
+        restart(); 
+    } 
+    view.classList.toggle("active"); 
+    playerImg.classList.toggle("active");
+    computerImg.classList.toggle("active"); 
+}
+
+function restart() {
+    view.classList.remove("no-screen"); 
+    textBox.textContent = ""; 
+}
+view.addEventListener("animationend", (e) => {
+    if (e.animationName === "open-animation") {
+        view.classList.add("no-screen");
+        animateText("Welcome to Rock Paper Scissors (Pokemon Version)");
+    }
+})
 /* TODOS 
 1. Page open animation: 
     - screen fade from black with effect 
@@ -63,5 +90,20 @@ battleMusicMute.onclick = () => {
     - animate text
 */ 
 
-const openAnimation = document.querySelector(".open-animation"); 
 console.log(openAnimation); 
+
+function animateFirstChar(msg){
+    let charEl = document.createElement("span"); 
+    charEl.textContent = msg[0]; 
+    textBox.appendChild(charEl); 
+    setTimeout(()=>{animateFirstChar(msg.slice(1));}, 30); 
+}
+function animateText(msg) {
+    textBox.textContent = ""; 
+    if (msg !== '') {
+        setTimeout(()=> {
+            animateFirstChar(msg); 
+        }, 1000);
+    }
+}
+

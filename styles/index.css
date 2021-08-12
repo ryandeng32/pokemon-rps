@@ -21,6 +21,7 @@ body {
     padding: 0;
 }
 
+
 /* || CONTAINER */ 
 #container {
     position: relative;
@@ -35,9 +36,18 @@ body {
     box-shadow: 12px 14px 15px 5px rgba(49, 49, 49, 0.64);    
 }
 
+
 /* || VIEW */ 
-#view.no-screen::before {
-    display: none;
+#view {
+    border: 1.5em solid #3b3d47;
+    border-bottom: 0;
+    border-radius: 2em 2em 0 0;
+    position: relative; 
+    overflow: hidden;
+    display: grid; 
+    grid-template-columns: 1fr; 
+    grid-template-rows: 1fr 0.3fr;
+
 }
 
 #view::before {
@@ -53,11 +63,33 @@ body {
     background: rgb(155, 155, 155);
 }
 
+#view.no-screen::before {
+    display: none;
+}
+
+
+/* || OPEN ANIMATION */ 
 #view.init::before {
     content: ""; 
     animation-name: open-animation;
     animation-iteration-count: 2;
     animation-duration: 1s;
+    animation-fill-mode:forwards;
+}
+
+#view.init .player {
+    animation-name: player-move-in;
+    animation-duration: 1s;
+    animation-delay: 0.5s; 
+    animation-timing-function: ease-out;
+    animation-fill-mode:forwards;
+}
+
+#view.init .computer {
+    animation-name: computer-move-in;
+    animation-delay: 1s;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
     animation-fill-mode:forwards;
 }
 
@@ -74,32 +106,35 @@ body {
     }
 }
 
-#view {
-    border: 1.5em solid #3b3d47;
-    border-bottom: 0;
-    border-radius: 2em 2em 0 0;
-    position: relative; 
-    overflow: hidden;
-    display: grid; 
-    grid-template-columns: 1fr; 
-    grid-template-rows: 1fr 0.3fr;
+@keyframes player-move-in {
+    100% {
+        left: -3%;
+    }
+}
 
+@keyframes computer-move-in {
+    100% {
+        right: 7%;
+    }
 }
 
 
-
-
+/* || IMAGES & GAME SCENE */ 
+#images {
+    position: relative;
+    overflow: hidden;
+}
 
 .scene {
     display: block ;
     width: 100%;
 }
 
-#images {
-    position: relative;
-    overflow: hidden;
-}
 
+/* || PLAYER & COMPUTER TAG */ 
+.player-tag {
+    width: 100%;
+}
 .player-tag-group {
     position: absolute; 
     right: 5%;
@@ -111,8 +146,7 @@ body {
     top: 28%;
     right: 12%;
 }
-
-.player-tag-exp {
+.player-tag-score-outer {
     width: 46%; 
     height: 12%; 
     border: 1px solid #1e1e22;
@@ -122,7 +156,6 @@ body {
     right: 10%;
     border-radius: 1em;
 }
-
 .player-tag-score {
     width: 100%; 
     height: 100%;
@@ -136,7 +169,8 @@ body {
     top: 28%;
     left: 17%;
 }
-.player-tag {
+
+.computer-tag {
     width: 100%;
 }
 .computer-tag-group {
@@ -145,20 +179,17 @@ body {
     top: 5%; 
     left: 10%;
 }
-
 .computer-tag-level {
     position: absolute; 
     top: 22%; 
     right: 20%;
 }
-
 .computer-tag-name {
     position: absolute; 
     top: 22%; 
     left: 10%;
 }
-
-.computer-tag-exp {
+.computer-tag-score-outer {
     width: 46%; 
     height: 14%; 
     border: 1px solid #1e1e22;
@@ -168,7 +199,6 @@ body {
     right: 18%;
     border-radius: 1em;
 }
-
 .computer-tag-score {
     width: 100%; 
     height: 100%;
@@ -177,14 +207,21 @@ body {
     background: rgb(133, 218, 175);
     position: relative; 
 }
-.computer-tag {
-    width: 100%;
-}
+
+
+/* || PLAYER & COMPUTER & CHOICES SPRITES */ 
 .player {
     position: absolute; 
     bottom: -40%;
     left: -35%;
     width: 54%;
+}
+
+.computer {
+    position: absolute; 
+    top:15%;
+    right: -35%;
+    width: 33%;
 }
 
 .choice {
@@ -198,16 +235,38 @@ body {
     opacity: 0;
 }
 
-.player-choice.shoot {
-    animation-name: player-shoot; 
-    animation-duration: 1s; 
-    animation-fill-mode: forwards; 
-}
-
 .computer-choice {
     top: 30%; 
     right: 15%; 
     opacity: 0;
+}
+
+
+/* || PLAYER & COMPUTER ANIMATION */ 
+.player.tie {
+    animation-name: tie; 
+    animation-duration: 1s; 
+}
+
+.computer.tie {
+    animation-name: tie; 
+    animation-duration: 1s; 
+}
+
+.player.hurt {
+    animation-name: hurt; 
+    animation-duration: 1s; 
+}
+
+.computer.hurt {
+    animation-name: hurt; 
+    animation-duration: 1s; 
+}
+
+.player-choice.shoot {
+    animation-name: player-shoot; 
+    animation-duration: 1s; 
+    animation-fill-mode: forwards; 
 }
 
 .computer-choice.shoot {
@@ -216,6 +275,7 @@ body {
     animation-duration: 1s; 
     animation-fill-mode: forwards; 
 }
+
 @keyframes computer-shoot {
     50% {
         right: 40%; 
@@ -226,6 +286,7 @@ body {
         opacity: 0; 
     }
 }
+
 @keyframes player-shoot {
     50% {
         bottom: 25%; 
@@ -236,14 +297,7 @@ body {
         opacity: 0; 
     }
 }
-.player.tie {
-    animation-name: tie; 
-    animation-duration: 1s; 
-}
-.computer.tie {
-    animation-name: tie; 
-    animation-duration: 1s; 
-}
+
 @keyframes tie {
     50% {
         transform: translateY(-0.5em);
@@ -254,34 +308,6 @@ body {
     80% {
         transform: scale(1.2);
     }
-}
-.player.hurt {
-    animation-name: hurt; 
-    animation-duration: 1s; 
-}
-#view.init .player {
-    animation-name: player-move-in;
-    animation-duration: 1s;
-    animation-delay: 0.5s; 
-    animation-timing-function: ease-out;
-    animation-fill-mode:forwards;
-}
-.computer {
-    position: absolute; 
-    top:15%;
-    right: -35%;
-    width: 33%;
-}
-.computer.hurt {
-    animation-name: hurt; 
-    animation-duration: 1s; 
-}
-#view.init .computer {
-    animation-name: computer-move-in;
-    animation-delay: 1s;
-    animation-duration: 1s;
-    animation-timing-function: ease-out;
-    animation-fill-mode:forwards;
 }
 
 @keyframes hurt {
@@ -296,18 +322,9 @@ body {
         filter: sepia(100%);
     }
 }
-@keyframes player-move-in {
-    100% {
-        left: -3%;
-    }
-}
-@keyframes computer-move-in {
-    100% {
-        right: 7%;
-    }
-}
 
 
+/* || TEXTBOX & CHOICES BUTTONS */ 
 #action {
     padding-top: 0.5%;
     background: rgb(48, 48, 48);
@@ -316,6 +333,7 @@ body {
     grid-column-gap: 0.5%;
     grid-template-rows: 1fr; 
 }   
+
 .textbox {
     text-overflow:ellipsis;
     padding: 3%;
@@ -327,7 +345,6 @@ body {
     line-height: 1em;
 }
 
-
 .choices {
     border: 0.3em solid rgb(123, 123, 206);
     border-radius: 0.5em;
@@ -338,6 +355,7 @@ body {
     align-content: center;
     justify-content: center;;
 }
+
 .choices button {
     transition: 0.2s;
     border: none;
@@ -348,6 +366,8 @@ body {
     background: rgb(196, 196, 196);
 }
 
+
+/* || CONTROLLER */ 
 .controller {
     grid-area: controller;
     background: #1e1e22;
@@ -364,6 +384,7 @@ body {
     align-items: center;
     justify-content: space-around;
 }
+
 .control-btn {
     padding: 3%;
     border-radius: 50%; 
@@ -376,6 +397,7 @@ body {
     background-color: rgb(199, 199, 199);
 }
 
+/* || FOOTER */ 
 footer {
     margin-top: 2em;
 }

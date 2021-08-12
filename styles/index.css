@@ -20,8 +20,9 @@ body {
     margin-bottom: 2em;
     padding: 0;
 }
+
 /* || CONTAINER */ 
-.container {
+#container {
     position: relative;
     width: 60%;
     max-width: 600px;
@@ -31,14 +32,14 @@ body {
     grid-template-rows: 1fr 0.3fr;
     grid-template-areas: "view"
             "controller"; 
-    box-shadow: 12px 14px 15px 5px rgba(0,0,0,0.64);    
+    box-shadow: 12px 14px 15px 5px rgba(49, 49, 49, 0.64);    
 }
 
 /* || VIEW */ 
-.view.no-screen::before {
+#view.no-screen::before {
     display: none;
 }
-.view::before {
+#view::before {
     content: "Press the POWER button to play";
     display: flex; 
     align-items: center;
@@ -48,10 +49,10 @@ body {
     position: absolute;
     top: 0;
     z-index: 2;
-    background: rgb(136, 136, 136);
+    background: rgb(155, 155, 155);
 }
 
-.view.active::before {
+#view.init::before {
     content: ""; 
     animation-name: open-animation;
     animation-iteration-count: 2;
@@ -72,7 +73,7 @@ body {
     }
 }
 
-.view {
+#view {
     border: 1.5em solid #3b3d47;
     border-bottom: 0;
     border-radius: 2em 2em 0 0;
@@ -93,7 +94,7 @@ body {
     width: 100%;
 }
 
-.images {
+#images {
     position: relative;
     overflow: hidden;
 }
@@ -114,11 +115,20 @@ body {
     width: 45%; 
     height: 0.6em; 
     border: 1px solid #1e1e22;
-    background: rgb(133, 218, 175);
+    background: gray;
     position: absolute; 
     top: 2.3em; 
     right: 1.2em;
     border-radius: 1em;
+}
+
+.player-tag-score {
+    width: 100%; 
+    height: 100%;
+    border-radius: 1em;
+    background: rgb(133, 218, 175);
+    position: relative; 
+    transition: 0.2s; 
 }
 .player-tag-name {
     position: absolute; 
@@ -151,11 +161,20 @@ body {
     width: 45%; 
     height: 0.6em; 
     border: 1px solid #1e1e22;
-    background: rgb(133, 218, 175);
     position: absolute; 
     top: 2em; 
+    background: gray;
     right: 2.2em;
     border-radius: 1em;
+}
+
+.computer-tag-score {
+    width: 100%; 
+    height: 100%;
+    transition: 0.2s; 
+    border-radius: 1em;
+    background: rgb(133, 218, 175);
+    position: relative; 
 }
 .computer-tag {
     width: 100%;
@@ -167,7 +186,11 @@ body {
     width: 54%;
 }
 
-.player.active {
+.player.hurt {
+    animation-name: hurt; 
+    animation-duration: 1s; 
+}
+#view.init .player {
     animation-name: player-move-in;
     animation-duration: 1s;
     animation-delay: 0.5s; 
@@ -180,7 +203,11 @@ body {
     right: -35%;
     width: 33%;
 }
-.computer.active {
+.computer.hurt {
+    animation-name: hurt; 
+    animation-duration: 1s; 
+}
+#view.init .computer {
     animation-name: computer-move-in;
     animation-delay: 1s;
     animation-duration: 1s;
@@ -188,6 +215,18 @@ body {
     animation-fill-mode:forwards;
 }
 
+@keyframes hurt {
+    50% {
+        transform: translateY(1em);
+    }
+    70% {
+        transform: rotate(20deg);
+    }
+    80% {
+        transform: scale(1.2);
+        filter: sepia(100%);
+    }
+}
 @keyframes player-move-in {
     100% {
         left: -3%;
@@ -201,7 +240,7 @@ body {
 
 
 
-.text {
+#action {
     padding-top: 3px;
     background: rgb(48, 48, 48);
     display: grid; 

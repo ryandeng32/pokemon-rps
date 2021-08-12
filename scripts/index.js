@@ -1,10 +1,23 @@
-const CHOICES = ["rock", "paper", "scissors"]; 
+const textBox = document.querySelector(".textbox"); 
+const powerBtn = document.querySelector("#power-btn"); 
+const view = document.querySelector("#view");
+const playerImg = document.querySelector(".player");
+const computerImg = document.querySelector(".computer");
+const openAnimation = document.querySelector(".open-animation"); 
+const statusBtn = document.querySelector("#statusBtn")
+const computerScoreRender = document.querySelector(".computer-tag-score"); 
+const playerScoreRender = document.querySelector(".player-tag-score"); 
+const battleMusic = document.querySelector("#battle-music"); 
+const battleMusicMute = document.querySelector("#mute-btn"); 
+const icon = document.querySelector("#mute-unmute i")
+let isAnimating = false; 
 
 function computerPlay(){
+    const CHOICES = ["rock", "paper", "scissors"]; 
     return CHOICES[Math.floor(Math.random() * 3)]; 
 }
 
-function playRound(playerSelection, computerSelection) {
+function getResult(playerSelection, computerSelection) {
     playerSelection = playerSelection; 
     computerSelection = computerSelection; 
     if (playerSelection === computerSelection) {
@@ -18,92 +31,160 @@ function playRound(playerSelection, computerSelection) {
         }
 }
 
-function game() {
-    let playerScore = 0, computerScore = 0; 
-    for (let i=0; i < 5; i++) {
-        let playerSelection = prompt("Enter your selection (Rock, Paper, or Scissors)").toLowerCase().trim(); 
-        while (CHOICES.indexOf(playerSelection) == -1) {
-            console.log("Please enter a valid value!");
-            playerSelection = prompt("Enter your selection (Rock, Paper, or Scissors)").toLowerCase().trim(); 
+
+// // Dealing with DOM 
+// battleMusicMute.onclick = () => {
+//     icon.classList.toggle("fa-volume-mute")
+//     icon.classList.toggle("fa-volume-up")
+//     if (battleMusic.paused) {
+//         battleMusic.play(); 
+//     } else {
+//         battleMusic.pause(); 
+//     }
+// }
+
+
+function checkGame() {
+    if (playerScore === 5 || computerScore === 5) {
+        if (playerScore === 5) {
+            return "You Win!"; 
         }
+        else {
+            return "You Lose!"; 
+        }
+    }
+    return ''; 
+}
+
+
+function renderScore() {
+    computerScoreRender.style.width = `${((1-(playerScore / 5)) * 100).toFixed(0)}%`
+    playerScoreRender.style.width = `${((1-(computerScore / 5)) * 100).toFixed(0)}%`
+}
+
+function playRound(playerSelection) {
+    if (!isAnimating) {     
         let computerSelection = computerPlay(); 
-        console.log(`Computer selected ${computerSelection}`); 
-        let result = playRound(playerSelection, computerSelection); 
+        let result = getResult(playerSelection, computerSelection); 
         if (result.indexOf("Win") != -1) {
             playerScore++; 
+            computerImg.classList.add("hurt");
         } else if (result.indexOf("Lose") != -1) {
             computerScore++; 
+            playerImg.classList.add("hurt");
         }
-        console.log(result);
-        console.log(`Your score: ${playerScore}, Computer score: ${computerScore}`); 
-    }
-    console.log((playerScore > computerScore) ? "You Win!" : "You Lose"); 
-}
-
-
-// Dealing with DOM 
-const battleMusic = document.querySelector("#battle-music"); 
-const battleMusicMute = document.querySelector("#mute-unmute"); 
-const icon = document.querySelector("#mute-unmute i")
-battleMusicMute.onclick = () => {
-    icon.classList.toggle("fa-volume-mute")
-    icon.classList.toggle("fa-volume-up")
-    if (battleMusic.paused) {
-        battleMusic.play(); 
-    } else {
-        battleMusic.pause(); 
+        renderScore(playerScore, computerScore); 
+        showMsg(`You chose ${playerSelection}, computer chose ${computerSelection}`, result, 
+        `Your score: ${playerScore}, Computer score: ${computerScore}`, checkGame()); 
     }
 }
 
+playerImg.addEventListener("animationend", (e) => {
+    if (e.animationName === "hurt"){
+        playerImg.classList.remove("hurt");
+    }
+})
 
-const textBox = document.querySelector(".textbox"); 
-const startBtn = document.querySelector("#start-btn"); 
-const view = document.querySelector(".view");
-const playerImg = document.querySelector(".player");
-const computerImg = document.querySelector(".computer");
-const openAnimation = document.querySelector(".open-animation"); 
-
-startBtn.onclick = () => {
-    if (view.classList.contains("active")) {
-        restart(); 
-    } 
-    view.classList.toggle("active"); 
-    playerImg.classList.toggle("active");
-    computerImg.classList.toggle("active"); 
+computerImg.addEventListener("animationend", (e) => {
+    if (e.animationName === "hurt"){
+        computerImg.classList.remove("hurt");
+    }
+})
+function startGame() {
+    textQueue.push("Welcome to Rock Paper Scissors (Pokemon Version), first to 5 wins"); 
+    textQueue.push("You can choose from the buttons to the right. (NOTE: STATUS will show you the current score"); 
+   
 }
 
-function restart() {
+function showMsg(...msgs) {
+    if (!isAnimating) {
+        msgs.forEach(msg => {
+            if (msg !== ''){
+                textQueue.push(msg); 
+            }
+        })
+        view.dispatchEvent(animateTextDoneEvent); 
+
+    }
+}
+
+
+let textQueue = []; 
+let isPlaying = false;
+let timer = null; 
+let playerScore = 0, computerScore = 0; 
+let animateTextDoneEvent = new CustomEvent("animatetextdone", {
+}); 
+
+function gameInit() {
+    console.log(textQueue);
+    view.classList.add("init"); 
+    
+}
+
+function gameEnd() {
+    textQueue = [];
+    clearTimeout(timer)
+    playerScore = computerScore = 0;
+    renderScore()
+    view.classList.remove("init");
     view.classList.remove("no-screen"); 
+    computerImg.style.right = "-35%"; 
+    playerImg.style.left = "-35%"
     textBox.textContent = ""; 
 }
+
+
+
+
+function animateFirstChar(msg){
+    if (msg !== '') {
+        let charEl = document.createElement("span"); 
+        charEl.textContent = msg[0]; 
+        textBox.appendChild(charEl); 
+        timer = setTimeout(()=>{animateFirstChar(msg.slice(1));}, 20); 
+    } else {
+        isAnimating = false; 
+        view.dispatchEvent(animateTextDoneEvent);
+    }    
+}    
+function animateText(msg) {
+    textBox.textContent = "";
+    animateFirstChar(msg); 
+}    
+
+powerBtn.onclick = () => {
+    isPlaying = !isPlaying; 
+    (isPlaying) ? gameInit() : gameEnd();
+}
+
 view.addEventListener("animationend", (e) => {
     if (e.animationName === "open-animation") {
         view.classList.add("no-screen");
-        animateText("Welcome to Rock Paper Scissors (Pokemon Version)");
+        view.classList.remove("init");    
+        computerImg.style.right = "7%"; 
+        playerImg.style.left = "-3%"
+        startGame();
+        view.dispatchEvent(animateTextDoneEvent); 
     }
 })
-/* TODOS 
-1. Page open animation: 
-    - screen fade from black with effect 
-    - pokemons move from one side of the screen to their location 
-    - healthbar's health fills up 
-    - animate text
-*/ 
 
-console.log(openAnimation); 
-
-function animateFirstChar(msg){
-    let charEl = document.createElement("span"); 
-    charEl.textContent = msg[0]; 
-    textBox.appendChild(charEl); 
-    setTimeout(()=>{animateFirstChar(msg.slice(1));}, 30); 
-}
-function animateText(msg) {
-    textBox.textContent = ""; 
-    if (msg !== '') {
-        setTimeout(()=> {
-            animateFirstChar(msg); 
-        }, 1000);
+view.addEventListener("animatetextdone", () => {
+    if (textQueue.length !== 0) {
+        isAnimating = true; 
+        timer = setTimeout(()=>{animateText(textQueue.shift())}, 500); 
     }
-}
+})
 
+document.querySelector("#statusBtn").onclick = () => {
+    showMsg(`Your score: ${playerScore}, Computer score: ${computerScore}`); 
+}
+document.querySelector("#rockBtn").onclick = () => {
+   playRound("rock"); 
+}
+document.querySelector("#paperBtn").onclick = () => {
+    playRound("paper"); 
+}
+document.querySelector("#scissorsBtn").onclick = () => {
+    playRound("scissors"); 
+}

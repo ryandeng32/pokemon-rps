@@ -32,25 +32,26 @@ function getResult(playerSelection, computerSelection) {
 }
 
 
-// // Dealing with DOM 
-// battleMusicMute.onclick = () => {
-//     icon.classList.toggle("fa-volume-mute")
-//     icon.classList.toggle("fa-volume-up")
-//     if (battleMusic.paused) {
-//         battleMusic.play(); 
-//     } else {
-//         battleMusic.pause(); 
-//     }
-// }
+battleMusicMute.onclick = () => {
+    icon.classList.toggle("fa-volume-mute")
+    icon.classList.toggle("fa-volume-up")
+    if (battleMusic.paused) {
+        battleMusic.play(); 
+    } else {
+        battleMusic.pause(); 
+    }
+}
 
 
 function checkGame() {
     if (playerScore === 5 || computerScore === 5) {
         if (playerScore === 5) {
-            return "You Win!"; 
+            timer = setTimeout(()=>{gameEnd()}, 5000); 
+            return "You Win! Thanks for playing"; 
         }
         else {
-            return "You Lose!"; 
+            timer = setTimeout(()=>{gameEnd()}, 5000); 
+            return "You Lose! Thanks for playing"; 
         }
     }
     return ''; 
@@ -112,21 +113,24 @@ function showMsg(...msgs) {
 let textQueue = []; 
 let isPlaying = false;
 let timer = null; 
-let playerScore = 0, computerScore = 0; 
+let initPlayerScore = 0, initComputerScore = 0;
+let playerScore = initPlayerScore, computerScore = initComputerScore; 
 let animateTextDoneEvent = new CustomEvent("animatetextdone", {
 }); 
 
 function gameInit() {
+    renderScore()
     console.log(textQueue);
     view.classList.add("init"); 
     
 }
 
 function gameEnd() {
+    isPlaying = false;
     textQueue = [];
     clearTimeout(timer)
-    playerScore = computerScore = 0;
-    renderScore()
+    playerScore = initPlayerScore; 
+    computerScore = initComputerScore;
     view.classList.remove("init");
     view.classList.remove("no-screen"); 
     computerImg.style.right = "-35%"; 
